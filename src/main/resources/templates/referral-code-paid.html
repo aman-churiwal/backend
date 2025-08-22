@@ -1,0 +1,22 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<body>
+<div style="text-align: center; max-width: 600px; margin: 0 auto;">
+    <div style="margin: 3em auto; display:block; text-align: center;">
+        <img src="cid:viteezy_logo" style="width: 400px;">
+    </div>
+    <h2 style="text-align:center;">Hi <span th:text="${name}"></span>,</h2>
+    <p>Thanks for sharing!</p>
+    <p>Je referral code is gebruikt door <span th:text="${referralCodeUsedByName}"></span>.</p>
+
+    <p>Alleen samen met jou behalen wij onze missie om de vitaminemarkt voorgoed te veranderen, waarbij transparantie en persoonlijke aandacht wéér de norm zijn.</p>
+
+    <p>Wij stellen vitamines van hoge kwaliteit boven dure marketingcampagnes. Zodat jij de allerbeste kwaliteit krijgt voor een eerlijke prijs.</p>
+
+    <p><b><span th:text="${name}"></span>, nogmaals bedankt – op je volgende betaling krijg je &euro;<span th:text="${discount}"></span> euro korting!</b></p>
+
+    <p style="margin-top: 0;">Mocht je hier vragen over hebben dan kun je altijd contact met ons opnemen via <a href="mailto:info@viteezy.nl" style="text-decoration: underline;">info@viteezy.nl</a></p>
+    <p>Vriendelijke groet,</p>
+    <p>Viteezy</p>
+</div>
+</body>
+</html>

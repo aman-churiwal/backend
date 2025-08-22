@@ -1,0 +1,13 @@
+### Local config
+localhost.yml
+
+### IntelliJ
+*.iml
+.idea/
+*.ipr
+*.iws
+
+### Maven
+target/
+dependency-reduced-pom.xml
+log

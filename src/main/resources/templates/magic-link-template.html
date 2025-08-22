@@ -1,0 +1,18 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<body>
+<div style="text-align: center; background-color: #F6F3EF; padding: 10%;">
+    <h1>Login-link om in te loggen op Viteezy</h1>
+    <hr style="max-width: 35em; border: 0; border-top: 0.1em solid #E1DDDA;">
+    <p>Je hebt zojuist aangegeven in te willen loggen op Viteezy met jouw e-mailadres.
+    <br>
+    Klik op onderstaande knop om in te loggen. Deze link kan eenmalig gebruikt worden en is 10 minuten geldig.</p>
+    <a style="background-color: #00ab96; border: 0.2em solid #00ab96; color: #fff; margin-top: 1em;
+    padding: 0.4rem 1rem 0.3rem; display: inline-block; font-weight: bold; text-decoration: none; border-radius: 2rem;
+    cursor: pointer; font-size: 1rem; box-sizing: border-box;" th:href="${href}">Log in op Viteezy</a>
+    <br>
+    <a style="margin-top: 5em; display:block;" th:href="${href}" th:text="${href}"></a>
+    <p>Vriendelijke groet,</p>
+    <p>Viteezy</p>
+</div>
+</body>
+</html>

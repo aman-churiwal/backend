@@ -1,0 +1,21 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<body>
+<div style="text-align: left; max-width: 600px; margin: 0 auto;">
+    <div style="margin: 3em auto; display:block; text-align: center;">
+        <img src="cid:viteezy_logo" style="width: 400px;">
+    </div>
+    <h3 style="margin-bottom: 0;">Beste <span th:text="${name}"></span>,</h3>
+    <p style="margin-top: 0;">De afgelopen weken hebben wij je een aantal mails gestuurd over een betaling die niet goed doorgekomen is. Op dit moment kunnen wij hierdoor jouw pakket helaas niet produceren. Wij hebben als gezamenlijk doel dat je vitamines zo snel mogelijk geproduceerd worden en willen uiteraard voorkomen dat je een langere periode zonder vitamines komt te zitten en vragen je daarom om onderstaande stappen door te lopen. Op deze manier kunnen wij het pakket zo snel mogelijk produceren!</p>
+    <b>Hoe betaal je het openstaande bedrag?</b>
+    <ol style="margin: 5px 0 10px; padding: 0px;">
+        <li>Klik op de link: <a th:href="${href}" th:text="${href}"></a></li>
+        <li>Reken af via de website.</li>
+        <li>Klaar.</li>
+    </ol>
+    <b>Heb je hulp nodig om te kunnen betalen?</b>
+    <p style="margin-top: 0;">Misschien lukt het niet of gaat er iets mis bij het voortzetten van je abonnement en heb je hier hulp bij nodig. Voor de snelheid van het proces is het belangrijk dat je direct actie onderneemt. We helpen je graag verder op de klantenservice via info@viteezy.nl.</p>
+    <p>Vriendelijke groet,</p>
+    <p>Viteezy</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,126 @@
+server:
+  rootPath: "/viteezy/api/*"
+  applicationConnectors:
+    - type: http
+      port: 8080
+  adminConnectors:
+    - type: http
+      port: 8081
+
+logging:
+  level: ${LOGGING_LEVEL:-INFO}
+  loggers:
+    viteezy: ${LOGGING_LOGGERS_VITEEZY_LEVEL:-DEBUG}
+    org.glassfish.jersey.logging.LoggingFeature: ${LOGGING_LOGGERS_JERSEY:-DEBUG} # Set to DEBUG in order to fully print incoming HTTP requests
+    net.schmizz.sshj: ${LOGGING_LOGGERS_SSHJ_LEVEL:-ERROR}
+
+database:
+  driverClass: com.mysql.cj.jdbc.Driver
+  user: ${DATABASE_USER:-viteezyUser}
+  password: ${DATABASE_PASSWORD:-viteezypassword}
+  url: jdbc:mysql://${DATABASE_URL:-127.0.0.1:3306}/viteezy?allowPublicKeyRetrieval=true&useSSL=false
+  minSize: ${DATABASE_MIN_SIZE:-5}
+  initialSize: ${DATABASE_MIN_SIZE:-5}
+  maxSize: ${DATABASE_MAX_SIZE:-50}
+  properties:
+    charSet: UTF-8
+
+swagger:
+  resourcePackage: "viteezy.controller"
+
+cache:
+  ttl_seconds: ${CACHE_TTL_SECONDS:-5}
+  max_size: ${CACHE_MAX_SIZE:-100}
+
+payment:
+  api_key: ${PAYMENT_API_KEY:-test_jbWbb7azzBU6kmGHVpV8cgbke82rJs}
+  redirect_url: ${PAYMENT_REDIRECT_URL:-http://localhost:8080/viteezy/api/payment/plan}
+  webhook_url: ${PAYMENT_WEBHOOK_URL:-http://a64970ee.ngrok.io/viteezy/api/payment/callback}
+  request_redirect_url: ${REQUEST_REDIRECT_URL:-http://localhost:3000/payment-request}
+  recurring_months: ${PAYMENT_RECURRING_MONTHS:-1}
+  first_description: ${PAYMENT_FIRST_DESCRIPTION:-Viteezy adminkosten}
+  recurring_description: ${PAYMENT_RECURRING_DESCRIPTION:-Viteezy abotje}
+  shipping_costs: ${PAYMENT_SHIPPING_COSTS:-5}
+  shipping_costs_threshold: ${PAYMENT_SHIPPING_COSTS_THRESHOLD:-25}
+  start_date_in_days: ${PAYMENT_START_DATE_IN_DAYS:-27}
+  delivery_date_in_days: ${DELIVERY_DATE_IN_DAYS:-3}
+  payment_processing_in_days: ${PAYMENT_PROCESSING_IN_DAYS:-5}
+
+slack:
+  environment: ${SLACK_ENVIRONMENT:-}
+  orders_url: ${SLACK_URL:-}
+  errors_url: ${ERRORS_SLACK_URL:-https://hooks.slack.com/services/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}
+
+referral:
+  discount_amount: ${REFERRAL_DISCOUNT_AMOUNT:-10}
+  minimum_price: ${REFERRAL_MINIMUM_PRICE:-19.99}
+
+googleanalytics:
+  tracking_id: ${GOOGLE_ANALYTICS_TRACKING_ID:-UA-152876428-1}
+  measurement_id: ${GOOGLE_ANALYTICS_MEASUREMENT_ID:-G-44QWTLVVQT}
+  api_secret: ${GOOGLE_ANALYTICS_API_SECRET:-NcgHfYOLT4aUxGyBHOUwPA}
+
+facebook:
+  pixel_id: ${FACEBOOK_PIXEL_ID:-}
+  app_secret: ${FACEBOOK_APP_SECRET:-}
+  test_event_code: ${FACEBOOK_TEST_EVENT_CODE:-TEST44476}
+  app_id: ${FACEBOOK_APP_ID:-390966979275811}
+  graph_version: "22.0"
+
+mail:
+  server: ${MAIL_SERVER:-localhost}
+  port: ${MAIL_PORT:-25}
+  username: ${MAIL_USERNAME:-support@viteezy.nl}
+  password: ${MAIL_PASSWORD:-}
+  frontend_base_url: ${FRONTEND_BASE_URL:-http://localhost:3000}
+  default_order_bcc: ${MAIL_DEFAULT_ORDER_BCC:-}
+  pharmacist_csv_recipient: ${MAIL_PHARMACIST_CSV_RECIPIENT:-}
+  pharmacist_csv_subject: ${MAIL_PHARMACIST_CSV_SUBJECT:-Test bestanden}
+
+fulfilment:
+  sftp_remote_host: ${SFTP_REMOTE_HOST:-sftp-gateway.a16.cldsvc.net}
+  sftp_username: ${SFTP_USERNAME:-sftpviteezya}
+  sftp_privatekey_filename: ${SFTP_PRIVATEKEY_FILENAME:-}
+
+postnl:
+  api_key: ${POST_NL_API_KEY:-YOQL8bQw1acZfoEbGPhnRueCshfqYYtO}
+  url: ${POST_NL_URL:-https://api.postnl.nl}
+  shipment_api_key: ${POST_NL_SHIPMENT_API_KEY:-J2v9hGgdfAlkilvuH8GE0GSuMT6GbHKg}
+
+jwt:
+  uri: /auth/**
+  header: Authorization
+  prefix: Bearer
+  expiration: 86400
+  secret: JwtSecretKeyWhichIsVerySecretAndMoreThan512bitsJwtSecretKeyWhichIsVerySecretAndMoreThan512bits
+
+infobip:
+  url: ${INFOBIP_URL:-https://dmdlzg.api.infobip.com}
+  api_key: ${INFOBIP_API_KEY:-2a260f5a0556d25f0ecf6f033f57eec7-86538508-c6cd-4895-a2a4-441fab9bb025}
+
+klaviyo:
+  url: ${KLAVIYO_URL:-https://a.klaviyo.com/api}
+  api_key: ${KLAVIYO_API_KEY:-pk_6fc9a732688d32affdf4b32a28154364d8}
+  newsletter_list_id: ${NEWSLETTER_LIST_ID:-VTHQX8}
+  existing_customer_list_id: ${EXISTING_CUSTOMER_LIST_ID:-RrzpgU}
+
+health:
+  delayedShutdownHandlerEnabled: true
+  shutdownWaitPeriod: 10s
+  healthCheckUrlPaths: ["/health-check"]
+  healthChecks:
+    - name: DatabaseHealthCheck
+      critical: true
+      schedule:
+        checkInterval: 1000ms
+        downtimeInterval: 10s
+        failureAttempts: 3
+        successAttempts: 1
+    - name: deadlocks
+      critical: true
+      schedule:
+        checkInterval: 10000ms
+        downtimeInterval: 10s
+        failureAttempts: 1
+        successAttempts: 1
+

@@ -1,0 +1,50 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<body>
+<div style="text-align: left; max-width: 600px; margin: 0 auto;">
+    <div style="margin: 3em auto; display:block; text-align: center;">
+        <img src="cid:viteezy_logo" style="width: 400px;">
+    </div>
+    <h2 style="text-align:center;"><span th:text="${firstName}"></span>, welkom bij Viteezy!</h2>
+    <p style="text-align: center; margin-top: 0;">Jouw gepersonaliseerde vitamine plan wordt momenteel door ons team samengesteld en zal binnen 2-4 werkdagen bij jou worden bezorgd. Zodra je pakket is verzonden ontvang je van PostNL een email met je track & trace nummer.</p>
+    <br>
+    <h3 style="text-align: center; margin: 0;">Overzicht van jouw vitamine plan</h3>
+    <p th:text="${ingredientNames}" style="text-align: center; margin-top: 0;"></p>
+
+    <div style="max-width: 300px; margin: 0 auto;">
+        <p style="margin: 0;">Subtotaal: <b th:text="${'&euro;' + recurringAndNotDiscountedAmount}" style="float: right;"></b></p>
+        <p style="margin: 0;">Korting: <b th:text="${'(&euro;' + discountTotal + ')'}" style="float: right;"></b></p>
+        <p style="margin: 0;">Verzendkosten: <b th:text="${'&euro;' + shippingTotal}" style="float: right;"></b></p>
+        <p style="margin: 0;">BTW:<b th:text="${'&euro;' + taxTotal}" style="float: right;"></b></p>
+        <p style="margin: 0;">Totaal betaald: <b th:text="${'&euro;' + orderTotal}" style="float: right;"></b></p>
+        <hr style="background-color: #E0E0E0; height: 1px; border: 0;">
+    </div>
+
+    <div style="text-align:center;">
+        <h3 style="margin: 2.5em 0em 0em 0em;">Afleveradres</h3>
+        <p th:text="${firstName + ' ' + lastName}" style="margin: 0;"></p>
+        <p th:text="${street + ' ' + houseNumber + ' ' + houseNumberAddition}" style="margin: 0;"></p>
+        <p th:text="${city + ', ' + postcode}" style="margin: 0;"></p>
+        <p th:text="${country}" style="margin: 0;"></p>
+    </div>
+
+    <div style="text-align: center;">
+        <h3 style="margin: 2.5em 0em 0em 0em;">Klant ID</h3>
+        <span th:text="${customerId}"></span>
+    </div>
+
+    <div style="text-align: center;" th:style="${isSubscription} ? 'display: block' : 'display: none'">
+        <h3 style="text-align:center; margin: 2.5em 0em 0em 0em;">Jouw lidmaatschap</h3>
+        <p style="margin-top: 0;">Viteezy is een 100% flexibel en maandelijks opzegbaar lidmaatschap. Ons doel is om jou op lange termijn te helpen gezonde keuzes te maken en ervoor te zorgen dat jij altijd de juiste vitamines binnenkrijgt.</p>
+        <p>Je kunt alles rondom jouw vitamine plan zelf beheren binnen jouw eigen account.</p>
+    </div>
+    <div style="text-align: center;">
+        <h3 style="text-align: center; margin: 0;">Heb je vragen?</h3>
+        <span>Neem contact met ons op via <a href="mailto:info@viteezy.nl" style="text-decoration: underline;">info@viteezy.nl</a>.</span>
+        <br>
+        <span>Viteezy, Spiegelstraat 38, 1405HX Bussum, Noord-Holland 1405HX, Nederland</span>
+        <p>Vriendelijke groet,</p>
+        <p>Viteezy</p>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+package viteezy.service.quiz;
+
+import io.vavr.control.Either;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
+import viteezy.domain.quiz.TrainingIntensively;
+import viteezy.service.cache.CacheNames;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface TrainingIntensivelyService {
+
+    @Cacheable(cacheManager = "expiringCacheManager", cacheNames = CacheNames.TRAINING_INTENSIVELY, key = "'trainingIntensivelyId_'+#id")
+    Either<Throwable, Optional<TrainingIntensively>> find(Long id);
+
+    @Cacheable(cacheManager = "expiringCacheManager", cacheNames = CacheNames.TRAINING_INTENSIVELY, key = "'trainingIntensively'")
+    Either<Throwable, List<TrainingIntensively>> findAll();
+
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    Either<Throwable, TrainingIntensively> save(TrainingIntensively trainingIntensively);
+
+}

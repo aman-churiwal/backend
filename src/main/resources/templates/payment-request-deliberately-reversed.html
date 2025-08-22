@@ -1,0 +1,22 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<body>
+<div style="text-align: left; max-width: 600px; margin: 0 auto;">
+    <div style="margin: 3em auto; display:block; text-align: center;">
+        <img src="cid:viteezy_logo" style="width: 400px;">
+    </div>
+    <h3 style="margin-bottom: 0;">Beste <span th:text="${name}"></span>,</h3>
+    <p style="margin-top: 0;">Wij waarderen jouw lidmaatschap bij Viteezy. Helaas hebben wij je betaling van &euro; <span th:text="${amount}"></span> voor het laatste pakket van Viteezy niet ontvangen.</p>
+    <p style="margin-top: 0;">Aangezien Viteezy de kosten voor het pakket wel heeft gemaakt verzoeken we je graag om het openstaande bedrag via de volgende link over te boeken op onze website. We hebben je account op stop gezet zodat je in de toekomst geen vitamines meer ontvangt van ons.</p>
+    <b>Hoe betaal je het openstaande bedrag?</b>
+    <ol style="margin: 5px 0 10px; padding: 0px;">
+        <li>Klik op de link: <a th:href="${href}" th:text="${href}"></a></li>
+        <li>Reken af via de website.</li>
+        <li>Klaar.</li>
+    </ol>
+    <b>Heb je hulp nodig om te kunnen betalen?</b>
+    <p style="margin-top: 0;">Misschien heb je een goede reden waarom je niet kunt betalen en heb je hierbij hulp nodig. Het is belangrijk dat je direct actie onderneemt. We helpen je graag verder op de klantenservice via info@viteezy.nl. Uiteraard helpen wij je graag met het zoeken naar een passende oplossing indien het tijdig betalen geen optie is.</p>
+    <p>Vriendelijke groet,</p>
+    <p>Viteezy</p>
+</div>
+</body>
+</html>

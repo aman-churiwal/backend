@@ -1,0 +1,68 @@
+# === Set up. Alphabetical
+
+cache:
+  paths:
+  - .m2/repository # Cache downloaded dependencies and plugins between builds.
+
+stages:
+  - compile
+  - distribute:docker
+  - deploy
+
+compile:maven:
+  image: maven:3.9.4-amazoncorretto-17
+  variables:
+    # This will suppress any download for dependencies and plugins or upload messages which would clutter the console log.
+    # `showDateTime` will show the passed time in milliseconds. You need to specify `--batch-mode` to make this work.
+    MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
+    # As of Maven 3.3.0 instead of this you may define these options in `.mvn/maven.config` so the same config is used
+    # when running from the command line.
+    # `installAtEnd` and `deployAtEnd` are only effective with recent version of the corresponding plugins.
+    MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
+
+  stage: compile
+  script:
+    - 'mvn $MAVEN_CLI_OPTS clean install'
+  artifacts:
+    paths:
+      - target/
+
+distribute:docker:
+  image: google/cloud-sdk:525.0.0-debian_component_based
+  services:
+    - docker:19.03.13-dind
+#   - docker:dind    <--- docker:dind does not work well
+  variables:
+    DOCKER_HOST: tcp://docker:2376
+    DOCKER_TLS_CERTDIR: "/certs"
+    DOCKER_TLS_VERIFY: 1
+    DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
+  stage: distribute:docker
+  before_script:
+    - gcloud auth activate-service-account --key-file=${GCLOUD_SERVICE_KEY}
+    - gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+    - gcloud --quiet config set compute/region ${GOOGLE_COMPUTE_REGION}
+    - gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+    - gcloud --quiet auth configure-docker europe-docker.pkg.dev
+  script:
+    - docker build -t europe-docker.pkg.dev/viteezy/backend/docker:${CI_COMMIT_SHORT_SHA} .
+    - docker push europe-docker.pkg.dev/viteezy/backend/docker:${CI_COMMIT_SHORT_SHA}
+  dependencies:
+    - compile:maven
+  only:
+    - master
+
+deploy:staging:
+  stage: deploy
+  variables:
+    k8s_deployment_key: deployment/backend
+    k8s_deployment_value: backend
+    IMAGE_FULL_QUALIFIED: europe-docker.pkg.dev/viteezy/backend/docker:${CI_COMMIT_SHORT_SHA}
+    SERVICE_DOCKER_IMAGE_NAME: backend
+    SERVICE_DOCKER_IMAGE_VERSION: ${CI_COMMIT_SHORT_SHA}
+  trigger:
+    project: viteezy/iac
+    branch: master
+  when: on_success
+  only:
+    - master

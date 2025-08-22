@@ -1,0 +1,72 @@
+package viteezy.service.quiz;
+
+import com.google.common.base.Throwables;
+import io.vavr.control.Either;
+import io.vavr.control.Try;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import viteezy.db.quiz.AmountOfFishConsumptionRepository;
+import viteezy.domain.quiz.AmountOfFishConsumption;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
+
+public class AmountOfFishConsumptionServiceImpl implements AmountOfFishConsumptionService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AmountOfFishConsumptionService.class);
+    private final AmountOfFishConsumptionRepository amountOfFishConsumptionRepository;
+
+    public AmountOfFishConsumptionServiceImpl(AmountOfFishConsumptionRepository amountOfFishConsumptionRepository) {
+        this.amountOfFishConsumptionRepository = amountOfFishConsumptionRepository;
+    }
+
+    @Override
+    public Either<Throwable, Optional<AmountOfFishConsumption>> find(Long id) {
+        return amountOfFishConsumptionRepository.find(id)
+                .toEither();
+    }
+
+    @Override
+    public Either<Throwable, List<AmountOfFishConsumption>> findAll() {
+        return amountOfFishConsumptionRepository.findAll()
+                .toEither();
+    }
+
+    @Override
+    public Either<Throwable, AmountOfFishConsumption> save(AmountOfFishConsumption amountOfFishConsumption) {
+        return amountOfFishConsumptionRepository
+                .save(amountOfFishConsumption)
+                .toEither()
+                .flatMap(retrieveById())
+                .peekLeft(peekException())
+                .peekLeft(rollbackTransaction());
+    }
+
+    private Function<Long, Either<Throwable, AmountOfFishConsumption>> retrieveById() {
+        return id -> {
+            Try<Optional<AmountOfFishConsumption>> optionalTry = amountOfFishConsumptionRepository.find(id);
+            if (optionalTry.isSuccess() && optionalTry.get().isPresent()) {
+                return Either.right(optionalTry.get().get());
+            } else if (optionalTry.isSuccess() && optionalTry.get().isEmpty()) {
+                final String message = "AmountOfFishConsumption entity was saved but could not be retrieved from db";
+                LOGGER.error("{}", message);
+                return Either.left(new NoSuchElementException(message));
+            } else {
+                LOGGER.error(optionalTry.getCause().toString());
+                return Either.left(optionalTry.getCause());
+            }
+        };
+    }
+
+    private Consumer<Throwable> peekException() {
+        return throwable -> LOGGER.error("throwable={}", Throwables.getStackTraceAsString(throwable));
+    }
+
+    private Consumer<Throwable> rollbackTransaction() {
+        return throwable -> TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+    }
+}

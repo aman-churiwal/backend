@@ -1,0 +1,22 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<body>
+<div style="text-align: left; max-width: 600px; margin: 0 auto;">
+    <div style="margin: 3em auto; display:block; text-align: center;">
+        <img src="cid:viteezy_logo" style="width: 400px;">
+    </div>
+    <h2>Hi <span th:text="${name}"></span>,</h2>
+    <p>De tijd vliegt! Langzaam komt het einde van jouw vitamine rol in zicht.</p>
+    <p>Omdat wij vinden dat jij je absoluut niet druk hoeft te maken over je vitamines, staan wij in de startblokken om jouw nieuwe levering vitamines te personaliseren.</p>
+    <h3 style="margin: 0;">Jouw huidige vitamines</h3>
+    <p th:text="${ingredientNames}" style="margin-top: 0;"></p>
+    <h3 style="margin: 0;">Wil je iets wijzigen in je vitamine plan?</h3>
+    <p style="margin-top: 0;">Heb je nog vitamines over of wil je iets aan je vitamine plan aanpassen? Dat kun je eenvoudig doen via <a th:href="${domainLink}" style="text-decoration: underline;">jouw eigen Viteezy account</a>. Op die manier heb jij altijd de juiste vitamines in huis.</p>
+    <p>Houd er rekening mee dat wijzigingen in jouw vitamine plan tot 8 dagen voor de volgende levering kunnen worden doorgevoerd.</p>
+    <p>Als we je ergens mee kunnen helpen, dan horen we dat graag via info@viteezy.nl</p>
+    <p>Take care,</p>
+    <p style="margin-bottom: 0;">Kim</p>
+    <p style="margin: 0;">Customer Success Manager – Viteezy</p>
+    <p style="margin: 0;"><i>Helpt je je doelen te bereiken</i></p>
+</div>
+</body>
+</html>

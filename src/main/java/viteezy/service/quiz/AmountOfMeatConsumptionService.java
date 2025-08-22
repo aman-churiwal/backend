@@ -1,0 +1,24 @@
+package viteezy.service.quiz;
+
+import io.vavr.control.Either;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
+import viteezy.domain.quiz.AmountOfMeatConsumption;
+import viteezy.service.cache.CacheNames;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface AmountOfMeatConsumptionService {
+
+    @Cacheable(cacheManager = "expiringCacheManager", cacheNames = CacheNames.AMOUNT_OF_MEAT_CONSUMPTION, key = "'amountOfMeatConsumptionId_'+#id")
+    Either<Throwable, Optional<AmountOfMeatConsumption>> find(Long id);
+
+    @Cacheable(cacheManager = "expiringCacheManager", cacheNames = CacheNames.AMOUNT_OF_MEAT_CONSUMPTION, key = "'amountOfMeatConsumption'")
+    Either<Throwable, List<AmountOfMeatConsumption>> findAll();
+
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    Either<Throwable, AmountOfMeatConsumption> save(AmountOfMeatConsumption amountOfMeatConsumption);
+
+}
