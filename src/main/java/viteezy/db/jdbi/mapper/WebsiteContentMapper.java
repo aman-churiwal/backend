@@ -17,8 +17,10 @@ public class WebsiteContentMapper implements RowMapper<WebsiteContent> {
         final String title = rs.getString("title");
         final String subtitle = rs.getString("subtitle");
         final Boolean isActive = rs.getBoolean("is_active");
+        final String buttonText = rs.getString("button_text");
+        final String buttonLink = rs.getString("button_link");
         final LocalDateTime creationTimestamp = rs.getTimestamp("creation_timestamp").toLocalDateTime();
         final LocalDateTime modificationTimestamp = rs.getTimestamp("modification_timestamp").toLocalDateTime();
-        return new WebsiteContent(id, code, title, subtitle, isActive, creationTimestamp, modificationTimestamp);
+        return new WebsiteContent(id, code, title, subtitle, isActive, buttonText, buttonLink, creationTimestamp, modificationTimestamp);
     }
 }
