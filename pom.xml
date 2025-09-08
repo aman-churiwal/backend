@@ -12,7 +12,12 @@
     <packaging>jar</packaging>
 
     <name>Viteezy</name>
-
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo1.maven.org/maven2</url>
+        </repository>
+    </repositories>
     <!-- Alphabetic -->
     <properties>
         <bcrypt.version>0.10.2</bcrypt.version>
@@ -32,6 +37,7 @@
         <javax.version>4.0.0</javax.version>
         <jaxb-api.version>4.0.2</jaxb-api.version>
         <jjwt.version>0.12.6</jjwt.version>
+        <junit.jupiter.version>5.8.2</junit.jupiter.version>
         <libphonenumber.version>8.13.12</libphonenumber.version>
         <mainClass>viteezy.ViteezyApplication</mainClass>
         <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -54,6 +60,13 @@
                 <groupId>io.dropwizard</groupId>
                 <artifactId>dropwizard-dependencies</artifactId>
                 <version>${dropwizard.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${junit.jupiter.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -117,7 +130,6 @@
         <dependency>
             <groupId>com.smoketurner</groupId>
             <artifactId>dropwizard-swagger</artifactId>
-            <!-- do not upgrade mayor breaking changes -->
             <version>${dropwizard-swagger.version}</version>
         </dependency>
         <dependency>
@@ -201,22 +213,33 @@
             <version>${libphonenumber.version}</version>
         </dependency>
 
-        <!-- testing -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- Mockito JUnit 5 -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>5.12.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Mockito Core -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.12.0</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
@@ -227,13 +250,7 @@
             <artifactId>hibernate-validator</artifactId>
             <version>7.0.5.Final</version>
         </dependency>
-        <dependency>
-            <groupId>viteezy</groupId>
-            <artifactId>backend</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -283,7 +300,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>3.11.0</version>
+                <configuration>
+                    <release>17</release>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-source-plugin</artifactId>
@@ -299,14 +319,20 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
+                <artifactId>maven-failsafe-plugin</artifactId>
                 <version>2.22.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.22.0</version>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.1.2</version>
+<!--                <configuration>-->
+<!--                    <argLine>-->
+<!--                        -javaagent:${settings.localRepository}/org/mockito/mockito-core/5.12.0/mockito-core-5.12.0.jar-->
+<!--                    </argLine>-->
+<!--                </configuration>-->
             </plugin>
+
             <!--dockerize-->
             <plugin>
                 <groupId>io.fabric8</groupId>
@@ -332,6 +358,7 @@
                     </images>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 </project>
