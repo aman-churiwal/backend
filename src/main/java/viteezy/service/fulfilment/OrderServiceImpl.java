@@ -21,6 +21,7 @@ import viteezy.domain.postnl.TrackTrace;
 import viteezy.gateways.infobip.InfobipService;
 import viteezy.gateways.klaviyo.KlaviyoService;
 import viteezy.service.CustomerService;
+import viteezy.service.TripleWhaleService;
 
 import java.net.URI;
 import java.time.LocalDateTime;
@@ -39,13 +40,15 @@ public class OrderServiceImpl implements OrderService {
     private final CustomerService customerService;
     private final InfobipService infobipService;
     private final KlaviyoService klaviyoService;
+    private final TripleWhaleService tripleWhaleService;
 
     protected OrderServiceImpl(OrderRepository orderRepository, CustomerService customerService,
-                               InfobipService infobipService, KlaviyoService klaviyoService) {
+                               InfobipService infobipService, KlaviyoService klaviyoService, TripleWhaleService tripleWhaleService) {
         this.orderRepository = orderRepository;
         this.customerService = customerService;
         this.infobipService = infobipService;
         this.klaviyoService = klaviyoService;
+        this.tripleWhaleService = tripleWhaleService;
     }
 
     @Override
@@ -91,6 +94,7 @@ public class OrderServiceImpl implements OrderService {
     public Try<Order> save(Payment payment, PaymentPlan paymentPlan, Customer customer) {
         return buildOrder(payment, paymentPlan, customer)
                 .flatMap(orderRepository::save)
+                .onSuccess(savedOrder -> tripleWhaleService.sendOrder(savedOrder, payment)) // Send order to Triple Whale
                 .onFailure(peekException());
     }
 

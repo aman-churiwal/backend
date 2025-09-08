@@ -87,6 +87,11 @@ public class ViteezyConfiguration extends Configuration implements CachingDepend
     @NotNull
     private KlaviyoConfiguration klaviyoConfiguration;
 
+    @Valid
+    @NotNull
+    @JsonProperty("tripleWhale")
+    private TripleWhaleConfiguration tripleWhaleConfiguration;
+
     public SwaggerBundleConfiguration getSwaggerBundleConfiguration() {
         return swaggerBundleConfiguration;
     }
@@ -141,4 +146,6 @@ public class ViteezyConfiguration extends Configuration implements CachingDepend
     public KlaviyoConfiguration getKlaviyoConfiguration() {
         return klaviyoConfiguration;
     }
+
+    public TripleWhaleConfiguration getTripleWhaleConfiguration() {return tripleWhaleConfiguration;}
 }

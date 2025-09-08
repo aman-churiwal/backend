@@ -14,8 +14,10 @@ import viteezy.gateways.klaviyo.KlaviyoService;
 import viteezy.service.CustomerService;
 import viteezy.service.IngredientService;
 import viteezy.service.IngredientUnitService;
+import viteezy.service.TripleWhaleService;
 import viteezy.service.blend.BlendIngredientService;
 import viteezy.service.mail.EmailService;
+
 
 @Configuration("fulfilmentIoC")
 public class IoC {
@@ -50,8 +52,8 @@ public class IoC {
 
     @Bean("orderService")
     public OrderService orderService(OrderRepository orderRepository, CustomerService customerService,
-                                     InfobipService infobipService, KlaviyoService klaviyoService) {
-        return new OrderServiceImpl(orderRepository, customerService, infobipService, klaviyoService);
+                                     InfobipService infobipService, KlaviyoService klaviyoService, TripleWhaleService tripleWhaleService) {
+        return new OrderServiceImpl(orderRepository, customerService, infobipService, klaviyoService, tripleWhaleService);
     }
 
     @Bean("pharmacistOrderService")

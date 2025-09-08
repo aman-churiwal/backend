@@ -124,3 +124,6 @@ health:
         failureAttempts: 1
         successAttempts: 1
 
+tripleWhale:
+  apiKey: "90bcdc8c-c32e-4353-83ec-5da38da65c96"
+  apiUrl: "https://api.triplewhale.com/api/v2/data-in"

@@ -1,8 +1,10 @@
 package viteezy.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import viteezy.configuration.TripleWhaleConfiguration;
 import viteezy.configuration.ViteezyConfiguration;
 import viteezy.db.*;
 import viteezy.db.quiz.NameAnswerRepository;
@@ -72,6 +74,11 @@ public class IoC {
     @Bean("reviewService")
     public ReviewService reviewService(ReviewRepository reviewRepository) {
         return new ReviewServiceImpl(reviewRepository);
+    }
+
+    @Bean("tripleWhaleService")
+    public TripleWhaleService tripleWhaleService() {
+        return new TripleWhaleServiceImpl(this.viteezyConfiguration.getTripleWhaleConfiguration());
     }
 
     @Bean("utilityService")
