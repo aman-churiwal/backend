@@ -28,4 +28,6 @@ public interface CouponRepository {
     Try<CouponDiscount> save(CouponDiscount couponDiscount);
 
     Try<CouponDiscount> updateCouponDiscountStatus(CouponDiscount couponDiscount);
+
+    Try<Integer> updateStatusOfExpiredCoupons();
 }

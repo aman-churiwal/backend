@@ -30,6 +30,8 @@ public class CouponRepositoryImpl implements CouponRepository {
     private static final String UPDATE_COUPONS_USED_STATUS = "UPDATE coupons_used SET status = :status WHERE id = :id ";
     private static final String UPDATE_COUPONS_DISCOUNT_STATUS = "UPDATE coupons_discount SET status = :status WHERE id = :id ";
 
+    private static final String UPDATE_EXPIRED_COUPONS_STATUS = "UPDATE coupons SET is_active = FALSE WHERE end_date < NOW() AND is_active = TRUE";
+
     private final Jdbi jdbi;
 
     public CouponRepositoryImpl(Jdbi jdbi) {
@@ -145,5 +147,14 @@ public class CouponRepositoryImpl implements CouponRepository {
                 .execute();
         return Try.of(() -> jdbi.withHandle(queryCallback))
                 .flatMap(__ -> findDiscount(couponDiscount.getId()));
+    }
+
+    @Override
+    public Try<Integer> updateStatusOfExpiredCoupons() {
+        final HandleCallback<Integer, RuntimeException> queryCallback = handle -> handle
+                .createUpdate(UPDATE_EXPIRED_COUPONS_STATUS)
+                .execute();
+
+        return Try.of(() -> jdbi.withHandle(queryCallback));
     }
 }

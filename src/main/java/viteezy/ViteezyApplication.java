@@ -18,6 +18,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import viteezy.auth.CoreAuthenticator;
 import viteezy.auth.CoreAuthorizer;
 import viteezy.configuration.ViteezyConfiguration;
+import viteezy.controller.TaskController;
+import viteezy.db.CouponRepository;
 import viteezy.db.jdbi.health.DatabaseHealthCheck;
 import viteezy.domain.dashboard.User;
 import viteezy.service.dashboard.AuthenticationService;
@@ -56,6 +58,9 @@ public class ViteezyApplication extends Application<ViteezyConfiguration> {
     public void run(final ViteezyConfiguration configuration,
                     final Environment environment) {
         AnnotationConfigApplicationContext annotationContext = registerSpringContext(configuration, environment);
+
+        final var couponRepository = annotationContext.getBean(CouponRepository.class);
+        environment.jersey().register(new TaskController(couponRepository));
 
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
         registerJerseyComponentForAnnotation(environment, annotationContext, Path.class);
