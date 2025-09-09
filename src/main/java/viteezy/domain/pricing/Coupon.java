@@ -22,11 +22,12 @@ public class Coupon {
     private final Boolean isRecurring;
     private final Optional<Long> ingredientId;
     private final LocalDateTime creationDate;
+    private final Boolean isActive;
 
     public Coupon(Long id, String couponCode, LocalDateTime startDate, LocalDateTime endDate, BigDecimal amount,
                   BigDecimal minimumAmount, BigDecimal maximumAmount, Boolean percentage, Integer maxUses,
                   Integer used, Optional<Integer> recurringMonths, Optional<String> recurringTerms, Boolean isRecurring,
-                  Optional<Long> ingredientId, LocalDateTime creationDate) {
+                  Optional<Long> ingredientId, LocalDateTime creationDate, Boolean isActive) {
         this.id = id;
         this.couponCode = couponCode;
         this.startDate = startDate;
@@ -42,6 +43,7 @@ public class Coupon {
         this.isRecurring = isRecurring;
         this.ingredientId = ingredientId;
         this.creationDate = creationDate;
+        this.isActive = isActive;
     }
 
     public Long getId() {
@@ -104,17 +106,19 @@ public class Coupon {
         return creationDate;
     }
 
+    public  Boolean getIsActive() { return isActive; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Coupon that = (Coupon) o;
-        return Objects.equals(id, that.id) && Objects.equals(couponCode, that.couponCode) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate) && Objects.equals(amount, that.amount) && Objects.equals(minimumAmount, that.minimumAmount) && Objects.equals(maximumAmount, that.maximumAmount) && Objects.equals(percentage, that.percentage) && Objects.equals(maxUses, that.maxUses) && Objects.equals(used, that.used) && Objects.equals(recurringMonths, that.recurringMonths) && Objects.equals(isRecurring, that.isRecurring) && Objects.equals(ingredientId, that.ingredientId) && Objects.equals(creationDate, that.creationDate);
+        return Objects.equals(id, that.id) && Objects.equals(couponCode, that.couponCode) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate) && Objects.equals(amount, that.amount) && Objects.equals(minimumAmount, that.minimumAmount) && Objects.equals(maximumAmount, that.maximumAmount) && Objects.equals(percentage, that.percentage) && Objects.equals(maxUses, that.maxUses) && Objects.equals(used, that.used) && Objects.equals(recurringMonths, that.recurringMonths) && Objects.equals(isRecurring, that.isRecurring) && Objects.equals(ingredientId, that.ingredientId) && Objects.equals(creationDate, that.creationDate) && Objects.equals(isActive, that.isActive);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, couponCode, startDate, endDate, amount, minimumAmount, maximumAmount, percentage, maxUses, used, recurringMonths, isRecurring, ingredientId, creationDate);
+        return Objects.hash(id, couponCode, startDate, endDate, amount, minimumAmount, maximumAmount, percentage, maxUses, used, recurringMonths, isRecurring, ingredientId, creationDate, isActive);
     }
 
     @Override
@@ -134,6 +138,7 @@ public class Coupon {
                 .add("isRecurring=" + isRecurring)
                 .add("ingredientId=" + ingredientId)
                 .add("creationDate=" + creationDate)
+                .add("isActive=" + isActive)
                 .toString();
     }
 }

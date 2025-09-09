@@ -48,7 +48,7 @@ public class CouponRepositoryImpl implements CouponRepository {
     @Override
     public Try<Coupon> find(String couponCode) {
         final HandleCallback<Coupon, RuntimeException> queryCallback = handle -> handle
-                .createQuery(SELECT_ALL_COUPONS + "WHERE coupon_code = :couponCode")
+                .createQuery(SELECT_ALL_COUPONS + "WHERE coupon_code = :couponCode AND is_active = TRUE AND end_date > NOW()")
                 .bind("couponCode", couponCode)
                 .mapTo(Coupon.class).one();
         return Try.of(() -> jdbi.withHandle(queryCallback));

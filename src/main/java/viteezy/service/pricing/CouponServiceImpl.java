@@ -86,7 +86,8 @@ public class CouponServiceImpl implements CouponService, EnforcePresenceTrait {
         final Lazy<Boolean> isValidAmountLazy = Lazy.of(() -> (amount == null || isValidAmount(coupon, amount)));
         final Lazy<Boolean> isValidDateLazy = Lazy.of(() -> isValidDate(coupon));
         final Lazy<Boolean> isValidRecurringMonthsLazy = Lazy.of(() -> (recurringMonths == null || isValidRecurringMonths(coupon, recurringMonths)));
-        if (isValidUsedLazy.get() && isValidAmountLazy.get() && isValidDateLazy.get() && isValidRecurringMonthsLazy.get()) {
+        final Lazy<Boolean> isActiveLazy = Lazy.of(() -> isActive(coupon));
+        if (isValidUsedLazy.get() && isValidAmountLazy.get() && isValidDateLazy.get() && isValidRecurringMonthsLazy.get() && isActiveLazy.get()) {
             return Try.success(coupon);
         } else {
             final String message = "Failed coupon validation." +
@@ -94,6 +95,7 @@ public class CouponServiceImpl implements CouponService, EnforcePresenceTrait {
                     " validAmount=" + isValidAmountLazy.get() +
                     " validDate=" + isValidDateLazy.get() +
                     " validRecurringMonths=" + isValidRecurringMonthsLazy.get() +
+                    " isActive=" + isActiveLazy.get() +
                     " amount=" + amount +
                     " coupon=" + coupon;
             return Try.failure(new ValidationException(message));
@@ -116,5 +118,9 @@ public class CouponServiceImpl implements CouponService, EnforcePresenceTrait {
 
     private boolean isValidUsed(Coupon coupon) {
         return coupon.getMaxUses() == 0 || coupon.getUsed() < coupon.getMaxUses();
+    }
+
+    private boolean isActive(Coupon coupon) {
+        return coupon.getIsActive();
     }
 }

@@ -30,7 +30,8 @@ public class CouponMapper implements RowMapper<Coupon> {
         final Boolean isRecurring = rs.getBoolean("is_recurring");
         final Optional<Long> ingredientId = getNullableLong(rs);
         final LocalDateTime creationDate = rs.getTimestamp("creation_date").toLocalDateTime();
-        return new Coupon(id, couponCode, startDate, endDate, amount, minimumAmount, maximumAmount, percentage, maxUses, used, recurringMonths, recurringTerms, isRecurring, ingredientId, creationDate);
+        final Boolean isActive = rs.getBoolean("is_active");
+        return new Coupon(id, couponCode, startDate, endDate, amount, minimumAmount, maximumAmount, percentage, maxUses, used, recurringMonths, recurringTerms, isRecurring, ingredientId, creationDate, isActive);
     }
 
     private Optional<String> getNullableString(ResultSet rs) throws SQLException {

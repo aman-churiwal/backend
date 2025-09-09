@@ -10,22 +10,18 @@ public class WebsiteContent {
     private final String title;
     private final String subtitle;
     private final Boolean isActive;
-
-
     private final String buttonText;
-    private final String buttonLink;
     private final LocalDateTime creationTimestamp;
     private final LocalDateTime modificationTimestamp;
 
     public WebsiteContent(Long id, String code, String title, String subtitle, Boolean isActive,
-                          String buttonText, String buttonLink, LocalDateTime creationTimestamp, LocalDateTime modificationTimestamp) {
+                          String buttonText, LocalDateTime creationTimestamp, LocalDateTime modificationTimestamp) {
         this.id = id;
         this.code = code;
         this.title = title;
         this.subtitle = subtitle;
         this.isActive = isActive;
         this.buttonText = buttonText;
-        this.buttonLink = buttonLink;
         this.creationTimestamp = creationTimestamp;
         this.modificationTimestamp = modificationTimestamp;
     }
@@ -45,8 +41,6 @@ public class WebsiteContent {
     public Boolean getActive() { return isActive; }
 
     public String getButtonText() { return buttonText; }
-
-    public String getButtonLink() { return buttonLink; }
 
     public LocalDateTime getCreationTimestamp() {
         return creationTimestamp;
