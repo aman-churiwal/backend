@@ -20,16 +20,16 @@ class CouponServiceImplTest {
     private static final String COUPON_CODE = "couponCode";
     private static final Coupon COUPON_DISCOUNT_PERCENTAGE = new Coupon(COUPON_ID, COUPON_CODE,
             LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(1), BigDecimal.valueOf(0.5), BigDecimal.ZERO, BigDecimal.TEN,
-            true, 0, 0, Optional.empty(), null, false, Optional.empty(), LocalDateTime.now());
+            true, 0, 0, Optional.empty(), null, false, Optional.empty(), LocalDateTime.now(), Boolean.TRUE);
     private static final Coupon COUPON_DISCOUNT_PERCENTAGE_1_MONTH = new Coupon(COUPON_ID, COUPON_CODE,
             LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(1), BigDecimal.valueOf(0.5), BigDecimal.ZERO, BigDecimal.TEN,
-            true, 0, 0, Optional.of(1), null, false, Optional.empty(), LocalDateTime.now());
+            true, 0, 0, Optional.of(1), null, false, Optional.empty(), LocalDateTime.now(), Boolean.TRUE);
     private static final Coupon COUPON_DISCOUNT_PERCENTAGE_3_MONTH = new Coupon(COUPON_ID, COUPON_CODE,
             LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(1), BigDecimal.valueOf(0.5), BigDecimal.ZERO, BigDecimal.TEN,
-            true, 0, 0, Optional.of(3), null, false, Optional.empty(), LocalDateTime.now());
+            true, 0, 0, Optional.of(3), null, false, Optional.empty(), LocalDateTime.now(), Boolean.TRUE);
     private static final Coupon COUPON_DISCOUNT_PERCENTAGE_3_MONTH_INGREDIENT_ID = new Coupon(COUPON_ID, COUPON_CODE,
             LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(1), BigDecimal.valueOf(0.5), BigDecimal.ZERO, BigDecimal.TEN,
-            true, 0, 0, Optional.of(3), null, false, Optional.of(1L), LocalDateTime.now());
+            true, 0, 0, Optional.of(3), null, false, Optional.of(1L), LocalDateTime.now(), Boolean.TRUE);
     private final CouponRepository couponRepository = mock(CouponRepository.class);
     private final ReferralService referralService = mock(ReferralService.class);
 
